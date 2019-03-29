@@ -1,0 +1,16 @@
+Thu Mar 28 07:48:07 CDT 2019 : Installing AKS
+Thu Mar 28 07:48:12 CDT 2019 : Installing Portworx
+Thu Mar 28 07:48:17 CDT 2019 : Installing Datastore
+Thu Mar 28 07:48:22 CDT 2019 : Installing Gateway
+Thu Mar 28 07:48:27 CDT 2019 : Installing Contour
+Thu Mar 28 07:48:32 CDT 2019 : Installing LetsEncrypt
+Thu Mar 28 07:48:37 CDT 2019 : Installing Spark Operator
+Thu Mar 28 07:48:42 CDT 2019 : Installing A4IOT
+Thu Mar 28 07:48:47 CDT 2019 : End Create Tenant
+Thu Mar 28 07:49:06 CDT 2019 : Starting Update A4IOT Build
+Thu Mar 28 07:49:11 CDT 2019 : Completed Update A4IOT Build
+Thu Mar 28 07:49:24 CDT 2019 : Starting Update A4IOT Build
+Thu Mar 28 07:49:29 CDT 2019 : Completed Update A4IOT Build
+Thu Mar 28 07:54:32 CDT 2019 : Start Delete Tenant
+Thu Mar 28 07:54:32 CDT 2019 : Params:
+Thu Mar 28 07:55:02 CDT 2019 : End Delete Tenant
