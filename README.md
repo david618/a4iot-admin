@@ -43,7 +43,15 @@ Change Folder Name (e.g. a4iot-admin)
 
 Import the Project.
 
-Add code to implement operations.
+Add code to implement operations.  Keep the implementation separate from the swagger generated code. This will make it much easier to change the API in the future.
+
+Only make to Swagger Controllers (e.g. TenantApiController and TenantsApiController).  This controllers call the templation you create.  
+
+## Updating the API
+
+- Save a copy of the current "io" folder in source in IntelliJ.  
+- Copy the new generated Swagger "io" folder to IntelliJ project src 
+- Update the "Controller" classes copy as needed from the copy you saved
 
 
 
