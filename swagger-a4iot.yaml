@@ -1,0 +1,189 @@
+swagger: "2.0"
+info:
+  description: A4IOT Admin Server
+  version: 1.0.0
+  title: A4IOT Admin Server
+  contact:
+    email: djennings@esri.com
+basePath: /v2
+tags:
+  - name: a4iot
+    description: ArcGIS Analytics for Internet of Things
+schemes:
+  - https
+  - http
+paths:
+  /tenants:
+    get:
+      tags:
+      - tenant
+      summary: Get info about tenants
+      description: Returns a list of tenants
+      operationId: getTenants
+      produces:
+      - application/json
+      responses:
+        200:
+          description: successful operation
+          schema:
+            $ref: '#/definitions/Tenants'
+        400:
+          description: Invalid ID supplied
+        404:
+          description: Tenant not found    
+  /tenant/{tenant-id}:
+    get:
+      tags:
+      - tenant
+      summary: Get info about tenant
+      description: ''
+      operationId: getTenant
+      produces:
+      - application/json      
+      parameters: 
+        - name: tenant-id
+          in: path
+          description: tenant-id to retrieve info on
+          required: true
+          type: string    
+      responses:
+        200:
+          description: successful operation
+          schema:
+            $ref: '#/definitions/ApiResponse'
+        400:
+          description: Invalid ID supplied
+        404:
+          description: Tenant not found  
+    post:
+      tags:
+        - tenant
+      summary: Create new tenant
+      description: ''
+      operationId: createTenant
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: tenant-id
+          in: path
+          description: tenant-id to create
+          required: true
+          type: string
+          pattern: ^[a-z][a-z0-9]{4,10}$
+        - in: body
+          name: body
+          description: Information needed to create a tenant
+          required: true
+          schema:
+            $ref: '#/definitions/Tenant'
+      responses:
+        200:
+          description: successful operation
+          schema:
+            $ref: "#/definitions/ApiResponse"
+        400:
+          description: Invalid ID supplied
+        404:
+          description: Tenant not found  
+    delete:
+      tags:
+        - tenant
+      summary: Deletes a tenant
+      description: ''
+      operationId: deleteTenant
+      produces:
+        - application/json
+      parameters:
+        - name: tenant-id
+          in: path
+          description: tenant-id to delete; for dev use only; in production delete will snapshot before delete.
+          required: true
+          type: string
+        - name: confirm
+          in: query
+          required: false
+          type: string
+      responses:
+        200:
+          description: successful operation
+          schema:
+            $ref: "#/definitions/ApiResponse"
+        400:
+          description: Invalid ID supplied
+        404:
+          description: Tenant not found  
+    put:
+      tags:
+        - tenant
+      summary: Updates a tenant
+      description: Updates the A4IOT Build Number
+      operationId: updateTenant
+      produces:
+        - application/json
+      parameters:
+        - name: tenant-id
+          in: path
+          description: tenant-id to update; for dev use only
+          required: true
+          type: string
+        - name: a4iot-build-num
+          in: query
+          required: true
+          type: string          
+      responses:
+        200:
+          description: successful operation
+          schema:
+            $ref: "#/definitions/ApiResponse"
+        400:
+          description: Invalid tenant-id supplied
+        404:
+          description: Build Number not found    
+definitions:
+  Tenant:
+    type: object
+    properties:
+      a4iot-build-num:
+        type: string
+      location:
+        type: string
+        enum:
+          - westus2
+          - eastus2
+      azure-cores-per-instance:
+        type: string
+        enum:
+          - 8
+          - 16
+          - 32
+          - 64
+      azure-num-instances:
+        type: integer
+        minimum: 3
+        maximum: 20
+  TenantStatus:
+    type: object
+    properties:
+      tenant-id:
+        type: string
+      status:
+        type: string
+  Tenants:
+    type: array
+    items:
+      "$ref" : '#/definitions/TenantStatus'
+  ApiResponse:
+    type: object
+    properties:
+      code:
+        type: integer
+        format: int32
+      type:
+        type: string
+      message:
+        type: string
+externalDocs:
+  description: Find out more about Swagger
+  url: http://swagger.io
