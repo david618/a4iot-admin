@@ -10,5 +10,6 @@ Per instruction on [swagger-editor GitHub](https://github.com/swagger-api/swagge
 docker run -d -p 80:8080 swaggerapi/swagger-editor
 ```
 
-Created the API using browser connecting to Localhost.
+Created the API using browser connecting to Localhost.  From web app exported [swagger-a4iot.yaml](./swagger-a4iot.yaml).
+
 
