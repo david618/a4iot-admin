@@ -34,7 +34,7 @@ Code checked into [github](https://github.com/david618/a4iot-admin/) will eventu
 
 - Added support.sh (Common Variables and Logging Functions)
 - Modified code to create Tenant folder (/tenants/{tenant-id})
-- Code caaptures Tenant info in Tenant Folder (manifests; status; log; create.log; key)
+- Code captures Tenant info in Tenant Folder (manifests; status; log; create.log; key)
 
 ### Deployed to VM  
 
