@@ -21,16 +21,14 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.validation.Valid;
 import javax.validation.constraints.*;
 import java.util.List;
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2019-03-28T18:55:48.493Z")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2019-04-11T18:54:47.440Z")
 
 @Api(value = "tenants", description = "the tenants API")
 public interface TenantsApi {
 
-    @ApiOperation(value = "Get info about tenants", nickname = "getTenants", notes = "Returns a list of tenants", response = Tenants.class, tags={ "tenant", })
+    @ApiOperation(value = "Get info about tenants", nickname = "getTenants", notes = "Returns a list of tenants", response = Tenants.class, tags={ "tenants", })
     @ApiResponses(value = { 
-        @ApiResponse(code = 200, message = "successful operation", response = Tenants.class),
-        @ApiResponse(code = 400, message = "Invalid ID supplied"),
-        @ApiResponse(code = 404, message = "Tenant not found") })
+        @ApiResponse(code = 200, message = "successful operation", response = Tenants.class) })
     @RequestMapping(value = "/tenants",
         produces = { "application/json" }, 
         method = RequestMethod.GET)

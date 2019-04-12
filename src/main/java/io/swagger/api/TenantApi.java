@@ -7,6 +7,7 @@ package io.swagger.api;
 
 import io.swagger.model.ModelApiResponse;
 import io.swagger.model.Tenant;
+import io.swagger.model.TenantInfo;
 import io.swagger.annotations.*;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -22,7 +23,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.validation.Valid;
 import javax.validation.constraints.*;
 import java.util.List;
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2019-03-28T18:55:48.493Z")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2019-04-11T18:54:47.440Z")
 
 @Api(value = "tenant", description = "the tenant API")
 public interface TenantApi {
@@ -50,15 +51,15 @@ public interface TenantApi {
     ResponseEntity<ModelApiResponse> deleteTenant(@ApiParam(value = "tenant-id to delete; for dev use only; in production delete will snapshot before delete.",required=true) @PathVariable("tenant-id") String tenantId,@ApiParam(value = "") @Valid @RequestParam(value = "confirm", required = false) String confirm);
 
 
-    @ApiOperation(value = "Get info about tenant", nickname = "getTenant", notes = "", response = ModelApiResponse.class, tags={ "tenant", })
+    @ApiOperation(value = "Get info about tenant", nickname = "getTenant", notes = "", response = TenantInfo.class, tags={ "tenant", })
     @ApiResponses(value = { 
-        @ApiResponse(code = 200, message = "successful operation", response = ModelApiResponse.class),
+        @ApiResponse(code = 200, message = "successful operation", response = TenantInfo.class),
         @ApiResponse(code = 400, message = "Invalid ID supplied"),
         @ApiResponse(code = 404, message = "Tenant not found") })
     @RequestMapping(value = "/tenant/{tenant-id}",
         produces = { "application/json" }, 
         method = RequestMethod.GET)
-    ResponseEntity<ModelApiResponse> getTenant(@ApiParam(value = "tenant-id to retrieve info on",required=true) @PathVariable("tenant-id") String tenantId);
+    ResponseEntity<TenantInfo> getTenant(@ApiParam(value = "tenant-id to retrieve info on",required=true) @PathVariable("tenant-id") String tenantId);
 
 
     @ApiOperation(value = "Updates a tenant", nickname = "updateTenant", notes = "Updates the A4IOT Build Number", response = ModelApiResponse.class, tags={ "tenant", })

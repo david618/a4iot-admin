@@ -81,3 +81,5 @@ docker/mat/usr
 docker/mat/*.rpm
 
 io/src/test/resources/AzureEventHubSampler.properties
+
+test/tenants/*

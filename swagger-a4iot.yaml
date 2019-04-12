@@ -16,7 +16,7 @@ paths:
   /tenants:
     get:
       tags:
-      - tenant
+      - tenants
       summary: Get info about tenants
       description: Returns a list of tenants
       operationId: getTenants
@@ -27,10 +27,6 @@ paths:
           description: successful operation
           schema:
             $ref: '#/definitions/Tenants'
-        400:
-          description: Invalid ID supplied
-        404:
-          description: Tenant not found    
   /tenant/{tenant-id}:
     get:
       tags:
@@ -50,7 +46,7 @@ paths:
         200:
           description: successful operation
           schema:
-            $ref: '#/definitions/ApiResponse'
+            $ref: '#/definitions/TenantInfo'
         400:
           description: Invalid ID supplied
         404:
@@ -174,6 +170,19 @@ definitions:
     type: array
     items:
       "$ref" : '#/definitions/TenantStatus'
+  TenantInfo:
+    type: object
+    properties:
+      url:
+        type: string
+      a4iot-build:
+        type: string
+      status:
+        type: string
+      messages:
+        type: array
+        items:
+          type: string
   ApiResponse:
     type: object
     properties:

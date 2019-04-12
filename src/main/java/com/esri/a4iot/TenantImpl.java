@@ -2,11 +2,14 @@ package com.esri.a4iot;
 
 import io.swagger.model.ModelApiResponse;
 import io.swagger.model.Tenant;
+import io.swagger.model.TenantInfo;
 
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Properties;
 
 
@@ -97,7 +100,7 @@ public class TenantImpl {
         String cmd = scriptFolder + sep + createTenant + " " + tenantID + " "
                 + a4ioBuildNum + " " + location + " "
                 + azureCoresPerInstance + " " + azureNumInstance
-                + " > " + scriptFolder + sep + "tenants" + sep + tenantID + sep + "create.log";
+                + " > " + scriptFolder + sep + "tenants" + sep + tenantID + sep + "create.log 2>&1 &";
 
         System.out.println("Running command: " + cmd);
 
@@ -154,7 +157,7 @@ public class TenantImpl {
          */
 
         String cmd = scriptFolder + sep + deleteTenant + " " + tenantID
-                + " > " + scriptFolder + sep + "tenants" + sep + tenantID + sep + "delete.log";
+                + " > " + scriptFolder + sep + "tenants" + sep + tenantID + sep + "delete.log 2>&1 &";
 
         System.out.println("Running command: " + cmd);
 
@@ -183,45 +186,42 @@ public class TenantImpl {
         return resp;
     }
 
-    public ModelApiResponse get(String tenantID) {
+    public TenantInfo get(String tenantID) {
 
-        ModelApiResponse resp = new ModelApiResponse();
+        TenantInfo resp = new TenantInfo();
+        ArrayList<String> msgs = new ArrayList<>();
 
         // Create tenants and tenant folder if needed
         Path path = Paths.get(scriptFolder + sep + "tenants" + sep + tenantID);
         try {
             if (!Files.exists(path)) {
-                resp.setCode(99);
-                resp.setMessage("Tenant Does Not Exist");
-                resp.setType("Delete Failed");
+                msgs.add("Tenant Does Not Exist");
+                resp.setMessages(msgs);
+                resp.setStatus("");
+                resp.setA4iotBuild("");
+                resp.setUrl("");
                 return resp;
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-        Integer code = 0;
-
         // Read contents of scriptFolder/tenants/tenantID/log into Message
-        StringBuilder logSB = new StringBuilder();
-        String log;
         try {
             BufferedReader br = new BufferedReader(new FileReader(scriptFolder
                     + sep + "tenants" + sep + tenantID + sep + "log"));
 
             String line;
             while ((line = br.readLine()) != null) {
-                logSB.append(line + "\n");
+                msgs.add(line);
             }
-            log = logSB.toString();
 
         } catch (IOException e) {
-            log = "Error reading log file";
-            code = 1;
+            msgs.add("Error reading log file");
             e.printStackTrace();
         }
 
-        // Read contents of scriptFolder/tenants/tenantID/status into Type
+        // Read contents of scriptFolder/tenants/tenantID/status
         String status;
         try {
             BufferedReader br = new BufferedReader(new FileReader(scriptFolder
@@ -229,14 +229,38 @@ public class TenantImpl {
             status = br.readLine();
 
         } catch (IOException e) {
-            status = "Error reading log file";
-            code = 2;
+            status = "Error reading status file";
             e.printStackTrace();
         }
 
-        resp.setMessage(log);
-        resp.setType(status);
-        resp.setCode(code);
+        // Read contents of scriptFolder/tenants/tenantID/url
+        String url;
+        try {
+            BufferedReader br = new BufferedReader(new FileReader(scriptFolder
+                    + sep +  "tenants" + sep + tenantID + sep + "url"));
+            url = br.readLine();
+
+        } catch (IOException e) {
+            url = "Error reading url file";
+            e.printStackTrace();
+        }
+
+        // Read contents of scriptFolder/tenants/tenantID/a4iot_build
+        String a4iot_build;
+        try {
+            BufferedReader br = new BufferedReader(new FileReader(scriptFolder
+                    + sep +  "tenants" + sep + tenantID + sep + "a4iot_build"));
+            a4iot_build = br.readLine();
+
+        } catch (IOException e) {
+            a4iot_build = "Error reading a4iot_build file";
+            e.printStackTrace();
+        }
+
+        resp.setMessages(msgs);
+        resp.setStatus(status);
+        resp.setUrl(url);
+        resp.setA4iotBuild(a4iot_build);
 
         //System.out.println(log);
         //System.out.println(status);
@@ -252,7 +276,7 @@ public class TenantImpl {
 
         String cmd = scriptFolder + sep + updateTenant + " " + tenantID
                 + " " + a4ioBuildNum
-                + " > " + scriptFolder + sep + "tenants" + sep + tenantID + sep + "update.log";;
+                + " > " + scriptFolder + sep + "tenants" + sep + tenantID + sep + "update.log 2>&1 &";
 
         System.out.println("Running command: " + cmd);
 

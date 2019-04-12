@@ -3,6 +3,7 @@ package io.swagger.api;
 import com.esri.a4iot.TenantImpl;
 import io.swagger.model.ModelApiResponse;
 import io.swagger.model.Tenant;
+import io.swagger.model.TenantInfo;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.swagger.annotations.*;
 import org.slf4j.Logger;
@@ -22,7 +23,7 @@ import javax.validation.Valid;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.util.List;
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2019-03-28T18:55:48.493Z")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2019-04-11T18:54:47.440Z")
 
 @Controller
 public class TenantApiController implements TenantApi {
@@ -80,22 +81,22 @@ public class TenantApiController implements TenantApi {
         return new ResponseEntity<ModelApiResponse>(HttpStatus.NOT_IMPLEMENTED);
     }
 
-    public ResponseEntity<ModelApiResponse> getTenant(@ApiParam(value = "tenant-id to retrieve info on",required=true) @PathVariable("tenant-id") String tenantId) {
+    public ResponseEntity<TenantInfo> getTenant(@ApiParam(value = "tenant-id to retrieve info on",required=true) @PathVariable("tenant-id") String tenantId) {
         String accept = request.getHeader("Accept");
         if (accept != null && accept.contains("application/json")) {
             try {
 
                 TenantImpl tenant = new TenantImpl();
-                ModelApiResponse resp = tenant.get(tenantId);
-                return new ResponseEntity<ModelApiResponse>(resp, HttpStatus.OK);
+                TenantInfo resp = tenant.get(tenantId);
+                return new ResponseEntity<TenantInfo>(resp, HttpStatus.OK);
 
             } catch (Exception e) {
                 log.error("Couldn't serialize response for content type application/json", e);
-                return new ResponseEntity<ModelApiResponse>(HttpStatus.INTERNAL_SERVER_ERROR);
+                return new ResponseEntity<TenantInfo>(HttpStatus.INTERNAL_SERVER_ERROR);
             }
         }
 
-        return new ResponseEntity<ModelApiResponse>(HttpStatus.NOT_IMPLEMENTED);
+        return new ResponseEntity<TenantInfo>(HttpStatus.NOT_IMPLEMENTED);
     }
 
     public ResponseEntity<ModelApiResponse> updateTenant(@ApiParam(value = "tenant-id to update; for dev use only",required=true) @PathVariable("tenant-id") String tenantId,@NotNull @ApiParam(value = "", required = true) @Valid @RequestParam(value = "a4iot-build-num", required = true) String a4iotBuildNum) {
