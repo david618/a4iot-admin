@@ -4,6 +4,11 @@
 
 Created a Ubuntu 18.04 VM.
 
+- Configure NSG to allow ports 80,443
+- Setup DNS prefix on PublicIP
+- Added entry to /etc/hosts:  local-ip dns-name
+
+
 ## Setup Apache Web Server
 
 [How To Install Apache Web Server](https://www.digitalocean.com/community/tutorials/how-to-install-the-apache-web-server-on-ubuntu-18-04)
@@ -26,6 +31,10 @@ Adding ```<hostname>:80``` on first line was needed; otherwise calls were hanlde
 ### Enabled SSL
 
 Followed instructions to install SSL.
+
+```
+sudo a2ensite harbor.conf
+```
 
 ## Configured Certbot
 
